@@ -1,0 +1,55 @@
+<div>
+    <input type="file" file-reader="dyna.streamData">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th ng-repeat="head in dyna.fileData.head">{{head}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in dyna.fileData.body">
+                <td ng-repeat="block in row">{{block}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h4>Settings</h4>
+    <button type="button" class="btn btn-primary" ng-click="dyna.toggleSet()">{{dyna.showSettings?'hide':'show'}}</button>
+    <div ng-show="dyna.showSettings">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Column name</th>
+                    <th>Display</th>
+                    <th>Move</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="colPos in dyna.table.colPosition" ng-init="col = dyna.table.cols[colPos]">
+                    <td>{{col.value}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" ng-click="dyna.toggleCol(colPos)">{{col.display?'hide':'show'}}</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" ng-click="dyna.moveUp($index)" ng-hide="$index==0">up</button>
+                        <button type="button" class="btn btn-primary" ng-click="dyna.moveDown($index)"
+                        ng-hide="$index==dyna.table.cols.length-1">down</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th ng-repeat="colPos in dyna.table.colPosition" ng-init="col = dyna.table.cols[colPos]"
+                ng-show="dyna.table.cols[colPos].display">{{col.value}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in dyna.table.rows" ng-show="row.display">
+                <td ng-repeat="colPos in dyna.table.colPosition" ng-init="rowVal = row.value[colPos]"
+                ng-show="dyna.table.cols[colPos].display">{{rowVal}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
